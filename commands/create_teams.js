@@ -1,4 +1,5 @@
-const {SlashCommandBuilder, ChannelType, MessageFlags} = require("discord.js");
+const {SlashCommandBuilder, ChannelType, MessageFlags } = require("discord.js");
+const { loadCategoriesData, saveCategoriesData } = require('../persistence/categories_persistence')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -6,7 +7,7 @@ module.exports = {
         .setDescription('Cria canais para cada equipe de um desafio.')
         .addStringOption(option =>
             option.setName('challenge')
-                .setDescription('Nome do desafio (ex: mini1)')
+                .setDescription('Nome do desafio (ex: mini_1)')
                 .setRequired(true)
         )
         .addIntegerOption(option =>
@@ -15,8 +16,17 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
+        await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
         const challenge = interaction.options.getString('challenge');
         const numTeams = interaction.options.getInteger('number_of_teams');
+
+        const categoriesData = loadCategoriesData()
+
+        if (!categoriesData[challenge]) {
+            categoriesData[challenge] = [];
+        }
+
         try {
             for (let i = 1; i <= numTeams; i++) {
                 const teamName = `${challenge}_equipe_${i}`;
@@ -26,35 +36,39 @@ module.exports = {
                     type: ChannelType.GuildCategory,
                 });
 
-                await interaction.guild.channels.create({
+                const geralChannel = await interaction.guild.channels.create({
                     name: 'Geral',
                     type: ChannelType.GuildText,
                     parent: category.id,
                 });
 
-                await interaction.guild.channels.create({
+                const feedbacksChannel = await interaction.guild.channels.create({
                     name: 'Feedbacks',
                     type: ChannelType.GuildText,
                     parent: category.id,
                 });
 
-                await interaction.guild.channels.create({
+                const voiceChannel = await interaction.guild.channels.create({
                     name: 'Conversa',
                     type: ChannelType.GuildVoice,
                     parent: category.id,
                 });
+
+                categoriesData[challenge].push({
+                    team_number: i,
+                    category: category.id,
+                    text: [geralChannel.id, feedbacksChannel.id],
+                    voice: voiceChannel.id
+                });
             }
 
-            await interaction.reply({
-                content: `Canais para ${numTeams} equipes criados com sucesso!`,
-                flags: MessageFlags.Ephemeral
-            });
+            saveCategoriesData(categoriesData);
+
+            await interaction.editReply(`Canais para ${numTeams} equipes criados com sucesso!`);
+
         } catch (error) {
             console.error(error);
-            await interaction.reply({
-                content: `Houve um erro ao criar os canais: ${error}`,
-                flags: MessageFlags.Ephemeral
-            });
+            await interaction.editReply(`Houve um erro ao criar os canais: ${error}`);
         }
     },
 };
