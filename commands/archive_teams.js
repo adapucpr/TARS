@@ -33,7 +33,7 @@ module.exports = {
                 const textChannel = interaction.guild.channels.cache.get(textChannelId);
                 if (textChannel) {
                     const newName = `equipe_${team.team_number}_${textChannel.name}`;
-                    textChannel.setName(newName);c
+                    textChannel.setName(newName);
                     await textChannel.setParent(archiveCategory.id);
                 }
             }
