@@ -1,5 +1,5 @@
 const fs = require('fs');
-const dataFile = "./categoriesData.json";
+const dataFile = "persistence/categoriesData.json";
 
 function loadCategoriesData() {
     if (fs.existsSync(dataFile)) {
@@ -8,6 +8,8 @@ function loadCategoriesData() {
     return {};
 }
 
-function saveCategoriesData() {
+function saveCategoriesData(data) {
     fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 }
+
+module.exports = { loadCategoriesData, saveCategoriesData };
