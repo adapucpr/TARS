@@ -1,20 +1,25 @@
-const { Client, GatewayIntentBits, Partials, Events, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, Events, Collection, EmbedBuilder } = require('discord.js');
 const dotenv = require('dotenv').config()
-const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Channel] });
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
 
 const prefix = '/';
 
 const fs = require('fs');
+const path = require('path');
 
 client.commands = new Collection();
 
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(path.join(__dirname, 'commands')).filter(file => file.endsWith('.js'));
 
-for(const file of commandFiles){
+for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-
-    client.commands.set(command.name, command);
+    if (command.name) {
+        client.commands.set(command.name, command);
+    } else {
+        console.warn(`⚠️ Comando ${file} não tem uma propriedade 'name' válida.`);
+    }
 }
+
 
 //To run the bot, just type 'node .' on the ../Tars/ directory
 client.once('ready', () => {
@@ -35,12 +40,19 @@ client.on(Events.MessageCreate, (message) =>{
     //         client.commands.get('ping').execute(message, args);
     //         break
     // }
-    try {
-        client.commands.get(command).execute(message, args);
-    } catch (err) {
-        console.log(err.message);
-        message.channel.send('Esse comando eu não conheço, sô');
-    }
+    const cmd = client.commands.get(command);
+
+if (!cmd) {
+    return message.channel.send('Esse comando eu não conheço, sô');
+}
+
+try {
+    cmd.execute(message, args, client);
+} catch (err) {
+    console.error(`Erro ao executar o comando ${command}:`, err);
+    message.channel.send('Ocorreu um erro ao executar esse comando.');
+}
+
 });
 
 
