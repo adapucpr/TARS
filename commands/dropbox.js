@@ -5,6 +5,6 @@ module.exports = {
         .setName('dropbox')
         .setDescription('Gives the Academy Dropbox link'),
     execute(interaction) {
-        interaction.reply('https://www.dropbox.com/scl/fo/ci9endqr35wxbi236kxx6/ABn_Z2rVYuMQhqAibeU3kp8?rlkey=c72i5onqp1fqsve1ittkyrqam&st=mtof39ez&dl=0');
+        interaction.reply('https://www.dropbox.com/scl/fo/ymoh5c7as17vd2jqwojdn/AGVnjqa_402ros-Xd4Tl3PQ?rlkey=18xf2rer3zak5756o7kare9td&st=p6w9ojby&dl=0');
     }
 };

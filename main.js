@@ -2,7 +2,9 @@ const { Client, GatewayIntentBits, Partials, Events, Collection, MessageFlags } 
 const dotenv = require('dotenv').config()
 const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageReactions], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
 
+const dotenv = require('dotenv').config()
 const { birthdayTimer } = require('./database/db_api')
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
 const prefix = '/';
 
 const fs = require('fs');
