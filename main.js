@@ -1,7 +1,13 @@
-const { Client, GatewayIntentBits, Partials, Events, Collection, MessageFlags } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, Events, Collection } = require('discord.js');
+
 const dotenv = require('dotenv').config()
+<<<<<<< HEAD
 const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
 
+=======
+const { birthdayTimer } = require('./database/db_api')
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
+>>>>>>> daa84a9 (conflicts resolved)
 const prefix = '/';
 
 const fs = require('fs');
