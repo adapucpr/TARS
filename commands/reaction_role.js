@@ -25,7 +25,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setColor('#e42643')
       .setTitle('A Academy também é sobre ajudar!')
-      .setDescription(`Durante os próximos dois anos, vocês\nalém de se desenvolverem, vão ajudar\nno desenvolvimento das outras pessoas.\n\nPara facilitar esse processo\nmarca aqui em baixo a categoria\nquevocê mais se identifica!\n\n\`\`\`${space_invader} Quero ajudar com Programação\`\`\`\`\`\`${paintbrush} Quero ajudar com Design\`\`\`\n>>> Você será notificado quando marcarem\no role de ajuda. Caso queira parar de receber\nas notificações, é só desmarcar o emoji.\n\n`);
+      .setDescription(`Durante os próximos dois anos,\nalém de se desenvolverem, vocês vão ajudar\nno desenvolvimento das outras pessoas.\n\nPara facilitar esse processo\nmarca aqui em baixo a categoria\nque você mais se identifica!\n\n\`\`\`${space_invader} Quero ajudar com Programação\`\`\`\`\`\`${paintbrush} Quero ajudar com Design\`\`\`\n>>> Você será notificado quando marcarem\no role de ajuda. Caso queira parar de receber\nas notificações, é só desmarcar o emoji.\n\n`);
 
     const channel = interaction.guild.channels.cache.get(interaction.channelId) || interaction.channel;
     const messageEmbed = await channel.send({ embeds: [embed] });

@@ -33,6 +33,6 @@ module.exports = {
         // Generate message
         const final_message = teams.map((team, index) => `> ${index + 1} - ${team}`).join('\n');
 
-        interaction.reply(`Ordem das apresentações do **${challenge} da ${shift}**:\n${final_message}\n*Para mudar a ordem é só falar com a mentoria!*`);
+        interaction.reply(`Ordem das apresentações do **${challenge} da ${shift}**:\n${final_message}`);
     }
 };
