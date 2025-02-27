@@ -21,7 +21,6 @@ module.exports = {
                   content: '🔊 Gugu, dadada! \n***cc: Desculpa colega, esse comando você não pode rodar :/***',
                 });      
               }
-        
 
         await interaction.deferReply({ flags: MessageFlags.Ephemeral })
 
