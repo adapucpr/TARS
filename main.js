@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, Partials, Events, Collection, MessageFlags } = require('discord.js');
 const dotenv = require('dotenv').config()
 const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Channel] });
-
+const { birthdayTimer } = require('./database/db_api')
 const prefix = '/';
 
 const fs = require('fs');
@@ -11,7 +11,7 @@ client.commands = new Collection();
 const commandFiles = fs.readdirSync('./commands/')
     .filter(file => file.endsWith('.js'));
 
-for(const file of commandFiles){
+for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
 
     client.commands.set(command.name || command.data.name, command);
@@ -34,6 +34,8 @@ client.on(Events.InteractionCreate, async interaction => {
         await interaction.editReply('Ocorreu um erro ao executar o comando!');
     }
 });
+
+birthdayTimer()
 
 //This has to be the last line of the file
 client.login(process.env.CLIENT_TOKEN);
