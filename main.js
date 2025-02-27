@@ -37,5 +37,7 @@ client.on(Events.InteractionCreate, async interaction => {
     }
 });
 
+birthdayTimer()
+
 //This has to be the last line of the file
 client.login(process.env.CLIENT_TOKEN);
