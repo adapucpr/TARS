@@ -1,10 +1,12 @@
 const { Client, GatewayIntentBits, Partials, Events, Collection, MessageFlags } = require('discord.js');
 const dotenv = require('dotenv').config()
-const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Channel] });
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
+
 const { birthdayTimer } = require('./database/db_api')
 const prefix = '/';
 
 const fs = require('fs');
+const path = require('path');
 
 client.commands = new Collection();
 
@@ -16,6 +18,7 @@ for (const file of commandFiles) {
 
     client.commands.set(command.name || command.data.name, command);
 }
+
 
 //To run the bot, just type 'node .' on the ../Tars/ directory
 client.once('ready', () => {

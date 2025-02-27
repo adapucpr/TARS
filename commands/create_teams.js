@@ -1,10 +1,10 @@
-const {SlashCommandBuilder, ChannelType, MessageFlags } = require("discord.js");
+const {SlashCommandBuilder, ChannelType, MessageFlags, AttachmentBuilder } = require("discord.js");
 const { loadCategoriesData, saveCategoriesData } = require('../persistence/categories_persistence')
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('create_teams')
-        .setDescription('Cria canais para cada equipe de um desafio.')
+        .setDescription('Creates categories with 2 text and 1 vc for each chanllenge team.')
         .addStringOption(option =>
             option.setName('challenge')
                 .setDescription('Nome do desafio (ex: mini_1)')
@@ -16,6 +16,17 @@ module.exports = {
                 .setRequired(true)
         ),
     async execute(interaction) {
+        const member = interaction.member;
+        const server_admin = interaction.guild.roles.cache.find(role => role.name === "Server Admin");
+            // Verifica se o usuário tem o cargo "admin"
+            if (server_admin && !member.roles.cache.has(server_admin.id)) {
+                const audioAttachment = new AttachmentBuilder('./resources/gugudada.wav', { name: 'gugudada.wav' });
+                return await interaction.reply({ 
+                  files: [audioAttachment],
+                  content: '🔊 Gugu, dadada! \n***cc: Desculpa colega, esse comando você não pode rodar :/***',
+                });      
+              }
+        
         await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
         const challenge = interaction.options.getString('challenge');
