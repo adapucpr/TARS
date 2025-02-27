@@ -4,7 +4,7 @@ const { loadCategoriesData, saveCategoriesData } = require('../persistence/categ
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('create_teams')
-        .setDescription('Cria canais para cada equipe de um desafio.')
+        .setDescription('Creates categories with 2 text and 1 vc for each chanllenge team.')
         .addStringOption(option =>
             option.setName('challenge')
                 .setDescription('Nome do desafio (ex: mini_1)')

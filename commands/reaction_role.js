@@ -3,7 +3,7 @@ const { SlashCommandBuilder, EmbedBuilder, Events, MessageFlags, AttachmentBuild
 module.exports = { 
   data: new SlashCommandBuilder()
     .setName('reaction_role')
-    .setDescription('Configura a mensagem de reaction role!'),
+    .setDescription('Sends the Reactionrole message'),
   async execute(interaction) {
     const client = interaction.client;
     const member = interaction.member;
@@ -25,8 +25,8 @@ module.exports = {
 
     const embed = new EmbedBuilder()
       .setColor('#e42643')
-      .setTitle('Escolha sua área de ajuda!')
-      .setDescription(`${space_invader} Quero Ajudar com programação\n${paintbrush} Quero Ajudar com Design`);
+      .setTitle('A Academy também é sobre ajudar!')
+      .setDescription(`Durante os próximos dois anos, vocês\nalém de se desenvolverem, vão ajudar\nno desenvolvimento das outras pessoas.\n\nPara facilitar esse processo\nmarca aqui em baixo a categoria\nquevocê mais se identifica!\n\n\`\`\`${space_invader} Quero ajudar com Programação\`\`\`\`\`\`${paintbrush} Quero ajudar com Design\`\`\`\n>>> Você será notificado quando marcarem\no role de ajuda. Caso queira parar de receber\nas notificações, é só desmarcar o emoji.\n\n`);
 
     const channel = interaction.guild.channels.cache.get(channelId) || interaction.channel;
     
