@@ -1,6 +1,6 @@
 const { Client, GatewayIntentBits, Partials, Events, Collection, MessageFlags } = require('discord.js');
 const dotenv = require('dotenv').config()
-const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageReactions], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
 
 const { birthdayTimer } = require('./database/db_api')
 const prefix = '/';
