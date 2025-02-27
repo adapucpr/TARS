@@ -38,11 +38,15 @@ module.exports = {
       client.reactionRoleSetup = true;
 
       client.on(Events.MessageReactionAdd, async (reaction, user) => {
+	console.log('piroca 2');
         if (reaction.message.partial) await reaction.message.fetch();
+	console.log('piroca 3');
         if (reaction.partial) await reaction.fetch();
+	console.log('piroca 4');
         if (user.bot || !reaction.message.guild) return;
-
+	console.log('piroca 5');
         if (reaction.message.channel.id === channelId) {
+		console.log('piroca 6');
           const ajudaProgs = reaction.message.guild.roles.cache.find(role => role.name === "ajuda-progs");
           const ajudaDesign = reaction.message.guild.roles.cache.find(role => role.name === "ajuda-design");
 
@@ -50,6 +54,7 @@ module.exports = {
           if (!member) return;
 
           if (reaction.emoji.name === space_invader && ajudaProgs) {
+		console.log('piroca 7');
             await member.roles.add(ajudaProgs);
           } else if (reaction.emoji.name === paintbrush && ajudaDesign) {
             await member.roles.add(ajudaDesign);
