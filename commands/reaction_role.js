@@ -17,7 +17,6 @@ module.exports = {
       });      
     }
 
-    const channelId = interaction.channelId;
     const space_invader = '👾';
     const paintbrush = '🖌️';
 
@@ -28,25 +27,24 @@ module.exports = {
       .setTitle('A Academy também é sobre ajudar!')
       .setDescription(`Durante os próximos dois anos, vocês\nalém de se desenvolverem, vão ajudar\nno desenvolvimento das outras pessoas.\n\nPara facilitar esse processo\nmarca aqui em baixo a categoria\nquevocê mais se identifica!\n\n\`\`\`${space_invader} Quero ajudar com Programação\`\`\`\`\`\`${paintbrush} Quero ajudar com Design\`\`\`\n>>> Você será notificado quando marcarem\no role de ajuda. Caso queira parar de receber\nas notificações, é só desmarcar o emoji.\n\n`);
 
-    const channel = interaction.guild.channels.cache.get(channelId) || interaction.channel;
-    
+    const channel = interaction.guild.channels.cache.get(interaction.channelId) || interaction.channel;
     const messageEmbed = await channel.send({ embeds: [embed] });
     await messageEmbed.react(space_invader);
     await messageEmbed.react(paintbrush);
 
-    if (!client.reactionRoleSetup) {
-      client.reactionRoleSetup = true;
+    if (!client.reactionRoleMessages) {
+      client.reactionRoleMessages = new Set();
+    }
 
+    client.reactionRoleMessages.add(messageEmbed.id);
+
+    if (!client.reactionRoleSetup) {
       client.on(Events.MessageReactionAdd, async (reaction, user) => {
-	console.log('piroca 2');
         if (reaction.message.partial) await reaction.message.fetch();
-	console.log('piroca 3');
         if (reaction.partial) await reaction.fetch();
-	console.log('piroca 4');
         if (user.bot || !reaction.message.guild) return;
-	console.log('piroca 5');
-        if (reaction.message.channel.id === channelId) {
-		console.log('piroca 6');
+
+        if (client.reactionRoleMessages && client.reactionRoleMessages.has(reaction.message.id)) {
           const ajudaProgs = reaction.message.guild.roles.cache.find(role => role.name === "ajuda-progs");
           const ajudaDesign = reaction.message.guild.roles.cache.find(role => role.name === "ajuda-design");
 
@@ -54,7 +52,6 @@ module.exports = {
           if (!member) return;
 
           if (reaction.emoji.name === space_invader && ajudaProgs) {
-		console.log('piroca 7');
             await member.roles.add(ajudaProgs);
           } else if (reaction.emoji.name === paintbrush && ajudaDesign) {
             await member.roles.add(ajudaDesign);
@@ -67,7 +64,7 @@ module.exports = {
         if (reaction.partial) await reaction.fetch();
         if (user.bot || !reaction.message.guild) return;
 
-        if (reaction.message.channel.id === channelId) {
+        if (client.reactionRoleMessages && client.reactionRoleMessages.has(reaction.message.id)) {
           const ajudaProgs = reaction.message.guild.roles.cache.find(role => role.name === "ajuda-progs");
           const ajudaDesign = reaction.message.guild.roles.cache.find(role => role.name === "ajuda-design");
 
@@ -81,6 +78,8 @@ module.exports = {
           }
         }
       });
+
+      client.reactionRoleSetup = true;
     }
 
     await interaction.editReply("Mensagem de reaction role configurada com sucesso!");
