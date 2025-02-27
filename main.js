@@ -2,12 +2,27 @@ const { Client, GatewayIntentBits, Partials, Events, Collection } = require('dis
 
 const dotenv = require('dotenv').config()
 <<<<<<< HEAD
+<<<<<<< HEAD
 const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
 
 =======
 const { birthdayTimer } = require('./database/db_api')
 const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
 >>>>>>> daa84a9 (conflicts resolved)
+=======
+const { birthdayTimer } = require('./database/db_api')
+const client = new Client({ intents: [GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.Guilds], partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
+=======
+const client = new Client({ intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMessageReactions
+  ],
+  partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
+
+>>>>>>> 8667e60 (feat: comando de reaction role e de dropbox adicionados)
+>>>>>>> 51987ae (conflitos paia)
 const prefix = '/';
 
 const fs = require('fs');
