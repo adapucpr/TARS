@@ -23,6 +23,7 @@ for (const file of commandFiles) {
 //To run the bot, just type 'node .' on the ../Tars/ directory
 client.once('ready', () => {
     console.log('Tars is online');
+    birthdayTimer(client)
 });
 
 client.on(Events.InteractionCreate, async interaction => {
@@ -37,8 +38,6 @@ client.on(Events.InteractionCreate, async interaction => {
         await interaction.editReply('Ocorreu um erro ao executar o comando!');
     }
 });
-
-birthdayTimer()
 
 //This has to be the last line of the file
 client.login(process.env.CLIENT_TOKEN);

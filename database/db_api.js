@@ -1,3 +1,4 @@
+const { Client, GatewayIntentBits, Partials, Events, Collection, MessageFlags } = require('discord.js');
 const dotenv = require('dotenv').config()
 const Pool = require('pg').Pool
 
@@ -9,7 +10,7 @@ const pool = new Pool({
     database: process.env.POSTGRES_DB
 })
 
-function birthdayTimer() {
+function birthdayTimer(client) {
     var now = new Date();
     var night = new Date(
         now.getFullYear(),
@@ -17,16 +18,17 @@ function birthdayTimer() {
         now.getDate() + 1,
         12, 0, 0
     );
+
     var msToBirthday = night.getTime() - now.getTime()
 
     setTimeout(function () {
-        sendCongratulations()
-        birthdayTimer()
+        sendCongratulations(client)
+        birthdayTimer(client)
     }, msToBirthday)
 }
 
-async function sendCongratulations() {
-    const channel = client.channels.cache.get(process.env.BIRTHDAY_CHANNEL)
+async function sendCongratulations(client) {
+    const channel = await client.channels.cache.get(process.env.BIRTHDAY_CHANNEL)
     const data = new Date()
     var month = (data.getMonth() + 1).toString()
     var day = (data.getDate()).toString()
@@ -40,7 +42,7 @@ async function sendCongratulations() {
     if (names.rowCount < 1)
         return
 
-    var birthdayMessage = 'Feliz Aniversário para '
+    var birthdayMessage = '@everyone Feliz Aniversário para '
 
     names.rows.forEach((item, index) => {
         if (index < names.rowCount - 1)
@@ -50,6 +52,7 @@ async function sendCongratulations() {
     })
 
     channel.send(birthdayMessage)
+    console.log("burv2")
 }
 
 module.exports = { pool, birthdayTimer }
