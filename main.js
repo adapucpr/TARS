@@ -22,7 +22,7 @@ for (const file of commandFiles) {
 
 //To run the bot, just type 'node .' on the ../Tars/ directory
 client.once('ready', () => {
-    console.log('Tars is online');
+    console.log('Zezé is online');
     birthdayTimer(client)
 });
 
