@@ -52,7 +52,6 @@ async function sendCongratulations(client) {
     })
 
     channel.send(birthdayMessage)
-    console.log("burv2")
 }
 
 module.exports = { pool, birthdayTimer }
